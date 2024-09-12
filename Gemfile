@@ -14,7 +14,7 @@ group :development, :test do
   gem 'rspec-expectations'
   gem 'rspec-mocks'
   gem 'rack-test'        # To test Sinatra routes
-  gem 'dotenv'
+  # gem 'dotenv'
   gem 'webmock'          # To mock HTTP requests
   gem 'figaro'
 end
