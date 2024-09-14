@@ -1,6 +1,7 @@
 # spec/app_spec.rb
 require 'spec_helper'
 require 'json'
+require_relative '../serializers/helplines_serializer'
 
 RSpec.describe 'Guardian Angel API' do
   include Rack::Test::Methods
@@ -90,12 +91,18 @@ RSpec.describe 'Guardian Angel API' do
       
       # Parse the stringified 'helplines' field
       helplines = JSON.parse(response_body)['helplines']
+      serialized_helplines = HelplinesSerializer.format_helplines(helplines)[:data]
+      expect(serialized_helplines).to be_an(Array)
+      
+      first_helpline = serialized_helplines.first
+      expect(first_helpline).to have_key(:id)
+      expect(first_helpline[:id]).to eq("c8e47108-3f87-4311-ab8f-7a3adf01ba06")
 
-      expect(helplines).to be_an(Array)
+      expect(first_helpline[:attributes]).to have_key(:name)
+      expect(first_helpline[:attributes][:name]).to eq("988 Suicide & Crisis Lifeline")
 
-      first_helpline = helplines.first
-      expect(first_helpline['name']).to eq('988 Suicide & Crisis Lifeline')
-      expect(first_helpline['phoneNumber']).to eq('988')
+      expect(first_helpline[:attributes]).to have_key(:description)
+      expect(first_helpline[:attributes][:description]).to include("988 Suicide & Crisis Lifeline is a suicide prevention and crisis intervention service available to anyone in suicidal crisis or emotional distress")
     end
   end
 
@@ -110,10 +117,18 @@ RSpec.describe 'Guardian Angel API' do
 
       # Parse the stringified 'helpline' field
       helpline = JSON.parse(response_body)['helpline']
+      serialized_helpline = HelplinesSerializer.format_helpline(helpline)[:data]
 
-      expect(helpline['name']).to eq('988 Suicide & Crisis Lifeline')
-      expect(helpline['phoneNumber']).to eq('988')
-      expect(helpline['description']).to include('suicide prevention and crisis intervention service')
+      expect(serialized_helpline).to be_an(Array)
+
+      expect(serialized_helpline.first).to have_key(:id)
+      expect(serialized_helpline.first[:id]).to eq("c8e47108-3f87-4311-ab8f-7a3adf01ba06")
+
+      expect(serialized_helpline.first[:attributes]).to have_key(:name)
+      expect(serialized_helpline.first[:attributes][:name]).to eq("988 Suicide & Crisis Lifeline")
+
+      expect(serialized_helpline.first[:attributes]).to have_key(:description)
+      expect(serialized_helpline.first[:attributes][:description]).to include("988 Suicide & Crisis Lifeline is a suicide prevention and crisis intervention service available to anyone in suicidal crisis or emotional distress")
     end
   end
 end
