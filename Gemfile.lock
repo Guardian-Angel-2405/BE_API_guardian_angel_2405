@@ -80,9 +80,6 @@ DEPENDENCIES
   pry
   rack-test
   rspec
-  rspec-core
-  rspec-expectations
-  rspec-mocks
   sinatra
   sinatra-contrib
   webmock

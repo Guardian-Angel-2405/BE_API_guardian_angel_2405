@@ -1,0 +1,14 @@
+{
+    "countries": [
+      {
+        "name": "New Zealand",
+        "code": "NZ",
+        "emergencyNumber": "111"
+      },
+      {
+        "name": "United States",
+        "code": "US",
+        "emergencyNumber": "988"
+      }
+    ]
+  }

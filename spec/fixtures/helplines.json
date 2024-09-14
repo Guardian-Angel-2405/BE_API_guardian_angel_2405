@@ -1,0 +1,149 @@
+{
+    "helplines": [
+      {
+        "id": "c8e47108-3f87-4311-ab8f-7a3adf01ba06",
+        "name": "988 Suicide & Crisis Lifeline",
+        "description": "988 Suicide & Crisis Lifeline is a suicide prevention and crisis intervention service available to anyone in suicidal crisis or emotional distress of any kind in the United States via phone, text message (SMS) and online chat. Callers to the 988 Suicide & Crisis Lifeline are routed to the nearest accredited crisis center in the caller's area.  988 Suicide & Crisis Lifeline conversations are answered by staff at over 200 accredited crisis centers across the United States who provide callers with crisis counseling and mental health referrals.  The Lifeline’s Crisis and Text Chat Service routes chat visitors to a subnetwork of crisis centers accredited in providing online emotional support. Specialized services are available to Veterans (in partnership with VA and SAMHSA, calls route to Veterans Crisis Line), Spanish speakers, and LGBTQ+ youth.",
+        "website": "https://988lifeline.org",
+        "country": {
+          "name": "United States",
+          "code": "US",
+          "emergencyNumber": "988"
+        },
+        "timezone": "America/Puerto_Rico",
+        "topics": [
+          "Suicidal thoughts",
+          "Abuse & domestic violence",
+          "Anxiety",
+          "Bullying",
+          "Dementia & Alzheimers",
+          "Depression",
+          "Eating & body image",
+          "Family",
+          "Gambling",
+          "Gender & sexual identity",
+          "Loneliness",
+          "Parenting",
+          "Pregnancy & abortion",
+          "Trauma & PTSD",
+          "Relationships",
+          "School & work",
+          "Self-harm",
+          "Sexual abuse",
+          "Stress",
+          "Substance use",
+          "Supporting others",
+          "Grief & loss",
+          "Physical illness"
+        ],
+        "phoneNumber": "988",
+        "smsNumber": "988",
+        "webChatUrl": "https://988lifeline.org/chat/"
+      },
+      {
+        "id": "89509dd8-f146-4765-b8f1-54c235b5594b",
+        "name": "Crisis Text Line",
+        "description": "Crisis Text Line is here to help you, whatever you're going through. We provide 24/7, free and confidential support and information by text message (text HOME to 741741), online chat and WhatsApp (+1-443-787-7678). We are available to talk with you about any kind of experience relating to mental health, including anxiety, depression, self-harm, stress, and thoughts of suicide. Our support is free. We are dedicated to preventing suicide. If you are contemplating suicide or want to kill yourself, we will listen without judgment and support you. When you contact us you will talk with one of our trained volunteers who are experienced in how to help people in your situation. They will listen to you, unpack your story and feelings, and work with you to help you through your challenges. Anyone can contact us, regardless of their age, gender, ethnicity or religious beliefs. We are ready to support you 24/7, whether it's the middle of the day or the middle of the night.",
+        "website": "https://www.crisistextline.org/",
+        "country": {
+          "name": "United States",
+          "code": "US",
+          "emergencyNumber": "988"
+        },
+        "timezone": "America/Los_Angeles",
+        "topics": [
+          "Anxiety",
+          "Depression",
+          "Self-harm",
+          "Stress",
+          "Suicidal thoughts",
+          "Abuse & domestic violence",
+          "Bullying",
+          "Dementia & Alzheimers",
+          "Eating & body image",
+          "Family",
+          "Gambling",
+          "Gender & sexual identity",
+          "Loneliness",
+          "Parenting",
+          "Pregnancy & abortion",
+          "Trauma & PTSD",
+          "Relationships",
+          "School & work",
+          "Sexual abuse",
+          "Substance use",
+          "Supporting others",
+          "Grief & loss",
+          "Physical illness"
+        ],
+        "smsNumber": "741741",
+        "webChatUrl": "https://connect.crisistextline.org/chat?utm_source=findahelpline",
+        "whatsappUrl": "https://api.whatsapp.com/send/?phone=14437877678&"
+      },
+      {
+        "id": "b97a3d66-84c0-49d9-8f24-1206dab284c1",
+        "name": "TrevorLifeline",
+        "description": "TrevorLifeline offers 24/7, free and confidential support by phone, text message (SMS) and online chat. We support LGBTQ+ young people in the U.S. and Mexico who may be experiencing emotional distress related to gender & sexual identity, loneliness, relationships, suicide, supporting a friend or family member.\r\n\r\nAs part of our commitment to preventing suicide, we are available to help you if you are considering suicide or harming yourself, or if you are noticing warning signs in a friend or family member.\r\n\r\nWhen you reach out to us you will talk with one of our friendly and supportive volunteers who are experienced in how to help people in your situation. They will listen to you, unpack your story and feelings, and work with you to help you through your challenges. We are open 24 hours a day, every day of the week. We are always available to talk with you.",
+        "website": "https://www.thetrevorproject.org/",
+        "country": {
+          "name": "United States",
+          "code": "US",
+          "emergencyNumber": "988"
+        },
+        "timezone": "America/Los_Angeles",
+        "topics": [
+          "Gender & sexual identity",
+          "Loneliness",
+          "Relationships",
+          "Suicidal thoughts",
+          "Supporting others",
+          "Anxiety",
+          "Bullying",
+          "Depression",
+          "Eating & body image",
+          "Self-harm",
+          "Stress"
+        ],
+        "phoneNumber": "(866) 488-7386",
+        "smsNumber": "678678",
+        "webChatUrl": "https://www.thetrevorproject.org/get-help/",
+        "whatsappUrl": "https://wa.me/525592253337"
+      },
+      {
+        "id": "0318ee03-74c0-4dbc-bba0-653df19436c9",
+        "name": "Love is Respect",
+        "description": "Love is Respect offers 24/7, free and confidential support by phone, text message (SMS) and online chat. We are here for everyone (including the LGBTQ+ community) who may be looking for support with abuse & domestic violence and relationships.\r\n\r\nWhen you contact us you will talk with one of our trained volunteers who are experienced in how to help people in your situation. They will listen to you, unpack your story and feelings, and work with you to help you through your challenges. Anyone may call and get support. We help everyone, regardless of age, gender, religious views, or nationality. We recognize that difficult mental health or crisis experiences can happen at any time, so we are available 24 hours a day, every day of the week.",
+        "website": "https://www.loveisrespect.org/",
+        "country": {
+          "name": "United States",
+          "code": "US",
+          "emergencyNumber": "988"
+        },
+        "timezone": "America/Los_Angeles",
+        "topics": [
+          "Abuse & domestic violence",
+          "Relationships"
+        ],
+        "phoneNumber": "(866) 331-9474",
+        "smsNumber": "22522",
+        "webChatUrl": "https://www.loveisrespect.org/get-help/#"
+      },
+      {
+        "id": "a2ceaf96-ade0-4d8d-a9f6-990ca6768824",
+        "name": "National Domestic Violence Hotline",
+        "website": "https://www.thehotline.org/",
+        "country": {
+          "name": "United States",
+          "code": "US",
+          "emergencyNumber": "988"
+        },
+        "timezone": "America/Los_Angeles",
+        "topics": [
+          "Abuse & domestic violence",
+          "Sexual abuse"
+        ],
+        "phoneNumber": "(800) 799-7233",
+        "smsNumber": "22522"
+      }
+    ]
+  }
