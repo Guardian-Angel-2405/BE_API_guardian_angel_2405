@@ -2,6 +2,7 @@
 require 'spec_helper'
 require 'json'
 
+
 RSpec.describe 'Guardian Angel API' do
   include Rack::Test::Methods
 
@@ -16,8 +17,8 @@ RSpec.describe 'Guardian Angel API' do
     stub_request(:post, "https://api.findahelpline.com/oauth/token")
     .with(
       body: {
-        "client_id" => "QCti8TRWAUnZnsZQx02qgOAKkN3U97VMtPzbbtZqcxQ",
-        "client_secret" => "bu7PNrA93AS12uKwWmwP7Vk1nbmoIoUaIEBX-uCFe-I",
+        "client_id" => ENV['CLIENT_ID'],
+        "client_secret" => ENV['CLIENT_SECRET'],
         "grant_type" => "client_credentials"
       },
       headers: {
