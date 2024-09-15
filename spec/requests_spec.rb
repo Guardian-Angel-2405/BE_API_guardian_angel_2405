@@ -45,12 +45,9 @@ RSpec.describe 'Guardian Angel API' do
       get '/countries'
 
       expect(last_response.status).to eq(200)
-      
       response_body = JSON.parse(last_response.body)
-      
-      # Parse the stringified 'countries' field
-      countries = JSON.parse(response_body)['countries']
 
+      countries = JSON.parse(response_body)['countries']
       expect(countries).to be_an(Array)
 
       first_country = countries.first
@@ -65,12 +62,9 @@ RSpec.describe 'Guardian Angel API' do
       get '/topics'
 
       expect(last_response.status).to eq(200)
-      
       response_body = JSON.parse(last_response.body)
-      
-      # Parse the stringified 'topics' field
-      topics = JSON.parse(response_body)['topics']
 
+      topics = JSON.parse(response_body)['topics']
       expect(topics).to be_an(Array)
 
       first_topic = topics.first
@@ -79,41 +73,57 @@ RSpec.describe 'Guardian Angel API' do
     end
   end
 
-  # Test the /helplines endpoint
+  # Test the /helplines endpoint for index page
   describe 'GET /helplines' do
-    it 'returns a list of helplines with correct fields' do
+    it 'returns a list of helplines with id, name, description, and website for each' do
       get '/helplines?country_code=us&limit=5'
 
       expect(last_response.status).to eq(200)
-
       response_body = JSON.parse(last_response.body)
-      
-      # Parse the stringified 'helplines' field
-      helplines = JSON.parse(response_body)['helplines']
 
+      helplines = response_body
       expect(helplines).to be_an(Array)
 
       first_helpline = helplines.first
+      expect(first_helpline['id']).to eq('c8e47108-3f87-4311-ab8f-7a3adf01ba06')
       expect(first_helpline['name']).to eq('988 Suicide & Crisis Lifeline')
-      expect(first_helpline['phoneNumber']).to eq('988')
+      expect(first_helpline['description']).to include('suicide prevention and crisis intervention service')
+      expect(first_helpline['website']).to eq('https://988lifeline.org')
     end
   end
 
-  # Test the /helplines/:id endpoint
+  # Test the /helplines/:id endpoint for show page
   describe 'GET /helplines/:id' do
-    it 'returns details of a specific helpline with correct fields' do
+    it 'returns details of a specific helpline with all required fields' do
       valid_helpline_id = 'c8e47108-3f87-4311-ab8f-7a3adf01ba06'
+      
       get "/helplines/#{valid_helpline_id}"
-
-      expect(last_response.status).to eq(200)
+      
+      # Parse the response body
       response_body = JSON.parse(last_response.body)
 
-      # Parse the stringified 'helpline' field
-      helpline = JSON.parse(response_body)['helpline']
+      expect(last_response.status).to eq(200)
 
-      expect(helpline['name']).to eq('988 Suicide & Crisis Lifeline')
-      expect(helpline['phoneNumber']).to eq('988')
-      expect(helpline['description']).to include('suicide prevention and crisis intervention service')
+      # Check for all required fields in the response
+      expect(response_body['id']).to eq(valid_helpline_id)
+      expect(response_body['name']).to eq('988 Suicide & Crisis Lifeline')
+      expect(response_body['description']).to include('suicide prevention and crisis intervention service')
+      expect(response_body['website']).to eq('https://988lifeline.org')
+      expect(response_body['phoneNumber']).to eq('988')
+      expect(response_body['smsNumber']).to eq('988')
+      expect(response_body['webChatUrl']).to eq('https://988lifeline.org/chat/')
+      
+      # Check topics array
+      expect(response_body['topics']).to include('Suicidal thoughts', 'Abuse & domestic violence', 'Anxiety')
+
+      # Check country hash
+      expect(response_body['country']).to be_a(Hash)
+      expect(response_body['country']['name']).to eq('United States')
+      expect(response_body['country']['code']).to eq('US')
+      expect(response_body['country']['emergencyNumber']).to eq('988')
+
+      # Check timezone
+      expect(response_body['timezone']).to eq('America/Puerto_Rico')
     end
   end
 end
