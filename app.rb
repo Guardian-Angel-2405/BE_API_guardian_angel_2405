@@ -65,6 +65,11 @@ get '/current_token' do
   end
 end
 
+# Root endpoint
+get '/' do
+  "Heroku is dumb"
+end
+
 # Endpoint to fetch countries
 get '/countries' do
   token = get_access_token
