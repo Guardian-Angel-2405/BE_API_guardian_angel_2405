@@ -5,6 +5,7 @@ gem 'sinatra'
 gem 'sinatra-contrib'  # For JSON helper
 gem 'faraday'          # To make HTTP requests
 gem 'dotenv'           # To manage environment variables
+gem 'rackup'           # To run the app
 gem 'rack'             # Required by Sinatra
 gem 'puma'           # Web server for Sinatra
 
