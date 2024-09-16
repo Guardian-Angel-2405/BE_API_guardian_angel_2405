@@ -5,6 +5,8 @@ require 'dotenv/load'
 require './serializers/helpline_serializer'
 require 'json'
 
+set :port, ENV['PORT'] || 4567
+
 # Load environment variables from .env
 Dotenv.load
 
