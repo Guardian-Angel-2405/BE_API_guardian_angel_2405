@@ -1,3 +1,4 @@
+ruby '3.2.2'
 source 'https://rubygems.org'
 
 gem 'sinatra'
@@ -10,5 +11,5 @@ group :development, :test do
   gem 'rack-test'      # To simulate requests in Sinatra
   gem 'webmock'        # To mock external API requests
   gem 'pry'            # For debugging
-  gem 'dotenv'
+  
 end

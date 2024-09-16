@@ -73,6 +73,7 @@ GEM
 PLATFORMS
   arm64-darwin-22
   ruby
+  x86_64-linux
 
 DEPENDENCIES
   dotenv
@@ -83,6 +84,9 @@ DEPENDENCIES
   sinatra
   sinatra-contrib
   webmock
+
+RUBY VERSION
+   ruby 3.2.2p53
 
 BUNDLED WITH
    2.5.12
