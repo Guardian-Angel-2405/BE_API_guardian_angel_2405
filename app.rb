@@ -140,3 +140,4 @@ get '/helplines/:id' do
     halt response.status, json({ error: 'Unable to fetch helpline details' })
   end
 end
+run Sinatra::Application.run!
