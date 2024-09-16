@@ -23,7 +23,7 @@ class HelplineSerializer
       webChatUrl: @helpline['webChatUrl'],
       topics: @helpline['topics'],
       country: @helpline['country'],
-      timezone: @helpline['timezone']
+      timezone: @helpline['timeZone']
     }
   end
 end
