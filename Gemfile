@@ -5,6 +5,8 @@ gem 'sinatra'
 gem 'sinatra-contrib'  # For JSON helper
 gem 'faraday'          # To make HTTP requests
 gem 'dotenv'           # To manage environment variables
+gem 'rack'             # Required by Sinatra
+gem 'puma'           # Web server for Sinatra
 
 group :development, :test do
   gem 'rspec'          # RSpec for testing
