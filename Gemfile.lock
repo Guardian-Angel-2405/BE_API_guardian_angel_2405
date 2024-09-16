@@ -16,6 +16,7 @@ GEM
       logger
     faraday-net_http (3.3.0)
       net-http
+    foreman (0.88.1)
     hashdiff (1.1.1)
     logger (1.6.1)
     method_source (1.1.0)
@@ -85,6 +86,7 @@ PLATFORMS
 DEPENDENCIES
   dotenv
   faraday
+  foreman
   pry
   puma
   rack

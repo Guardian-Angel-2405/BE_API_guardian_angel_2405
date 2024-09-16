@@ -8,7 +8,7 @@ gem 'dotenv'           # To manage environment variables
 gem 'rackup'           # To run the app
 gem 'rack'             # Required by Sinatra
 gem 'puma'           # Web server for Sinatra
-
+gem 'foreman'
 group :development, :test do
   gem 'rspec'          # RSpec for testing
   gem 'rack-test'      # To simulate requests in Sinatra
