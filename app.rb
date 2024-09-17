@@ -5,6 +5,8 @@ require 'dotenv/load'
 require './serializers/helpline_serializer'
 require 'json'
 
+set :port, ENV['PORT'] || 4567
+
 # Load environment variables from .env
 Dotenv.load
 
@@ -61,6 +63,11 @@ get '/current_token' do
   else
     json({ error: 'No token available' })
   end
+end
+
+# Root endpoint
+get '/' do
+  "Heroku is dumb"
 end
 
 # Endpoint to fetch countries
