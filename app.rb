@@ -7,13 +7,17 @@ require 'json'
 
 set :port, ENV['PORT'] || 4567
 
-# Load environment variables from .env
-Dotenv.load
-
 # In-memory cache for token and expiration time
 $token_cache = {
   token: nil,
   expires_at: nil
+}
+
+# Cache for API responses
+$response_cache = {
+  countries: nil,
+  topics: nil,
+  helplines: {}
 }
 
 # Method to check if the current token is still valid
@@ -47,31 +51,16 @@ def get_access_token
 
     $token_cache[:token] # Return the new token
   else
-    puts response.body
     halt response.status, json({ error: 'Unable to fetch access token' })
   end
 end
 
-# Endpoint to view the current access token and its expiration time
-get '/current_token' do
-  if $token_cache[:token]
-    json({
-      access_token: $token_cache[:token],
-      expires_at: $token_cache[:expires_at],
-      expires_in_seconds: ($token_cache[:expires_at] - Time.now).to_i
-    })
-  else
-    json({ error: 'No token available' })
-  end
-end
-
-# Root endpoint
-get '/' do
-  "Heroku is dumb"
-end
-
 # Endpoint to fetch countries
 get '/countries' do
+  if $response_cache[:countries]
+    return json $response_cache[:countries]
+  end
+
   token = get_access_token
   response = Faraday.get("https://api.throughlinecare.com/v1/countries") do |req|
     req.headers['Authorization'] = "Bearer #{token}"
@@ -79,6 +68,7 @@ get '/countries' do
   end
 
   if response.status == 200
+    $response_cache[:countries] = response.body
     json response.body
   else
     halt response.status, json({ error: 'Unable to fetch countries' })
@@ -87,6 +77,10 @@ end
 
 # Endpoint to fetch topics
 get '/topics' do
+  if $response_cache[:topics]
+    return json $response_cache[:topics]
+  end
+
   token = get_access_token
   response = Faraday.get("https://api.throughlinecare.com/v1/topics") do |req|
     req.headers['Authorization'] = "Bearer #{token}"
@@ -94,6 +88,7 @@ get '/topics' do
   end
 
   if response.status == 200
+    $response_cache[:topics] = response.body
     json response.body
   else
     halt response.status, json({ error: 'Unable to fetch topics' })
@@ -102,10 +97,15 @@ end
 
 # Endpoint to fetch helplines by country code and limit
 get '/helplines' do
-  token = get_access_token
   country_code = params['country_code'] || 'us'
   limit = params['limit'] || 20
 
+  cache_key = "#{country_code}_#{limit}"
+  if $response_cache[:helplines][cache_key]
+    return json $response_cache[:helplines][cache_key]
+  end
+
+  token = get_access_token
   response = Faraday.get("https://api.throughlinecare.com/v1/helplines?country_code=#{country_code}&limit=#{limit}") do |req|
     req.headers['Authorization'] = "Bearer #{token}"
     req.headers['Accept'] = 'application/json'
@@ -116,6 +116,7 @@ get '/helplines' do
     serialized_helplines = helplines.map do |helpline|
       HelplineSerializer.new(helpline).serialize_index
     end
+    $response_cache[:helplines][cache_key] = serialized_helplines
     json serialized_helplines
   else
     halt response.status, json({ error: 'Unable to fetch helplines' })
@@ -127,6 +128,10 @@ get '/helplines/:id' do
   token = get_access_token
   helpline_id = params[:id]
 
+  if $response_cache[:helplines][helpline_id]
+    return json $response_cache[:helplines][helpline_id]
+  end
+
   response = Faraday.get("https://api.throughlinecare.com/v1/helplines/#{helpline_id}") do |req|
     req.headers['Authorization'] = "Bearer #{token}"
     req.headers['Accept'] = 'application/json'
@@ -135,6 +140,7 @@ get '/helplines/:id' do
   if response.status == 200
     helpline = JSON.parse(response.body)['helpline']
     serialized_helpline = HelplineSerializer.new(helpline).serialize_show
+    $response_cache[:helplines][helpline_id] = serialized_helpline
     json serialized_helpline
   else
     halt response.status, json({ error: 'Unable to fetch helpline details' })
