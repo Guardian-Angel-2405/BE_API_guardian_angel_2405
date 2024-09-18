@@ -7,17 +7,22 @@ require 'json'
 
 set :port, ENV['PORT'] || 4567
 
+# Load environment variables from .env
+Dotenv.load
+
 # In-memory cache for token and expiration time
 $token_cache = {
   token: nil,
   expires_at: nil
 }
 
-# Cache for API responses
+# Cache for countries, topics, helplines, and helpline details with expiration times
+CACHE_EXPIRY = 24 * 3600 # 24 hours in seconds
 $response_cache = {
-  countries: nil,
-  topics: nil,
-  helplines: {}
+  countries: { data: nil, expires_at: nil },
+  topics: { data: nil, expires_at: nil },
+  helplines: {},
+  helpline_details: {}
 }
 
 # Method to check if the current token is still valid
@@ -51,14 +56,20 @@ def get_access_token
 
     $token_cache[:token] # Return the new token
   else
+    puts response.body
     halt response.status, json({ error: 'Unable to fetch access token' })
   end
 end
 
-# Endpoint to fetch countries
+# Root endpoint
+get '/' do
+  "Heroku is dumb"
+end
+
+# Endpoint to fetch countries with cache expiry
 get '/countries' do
-  if $response_cache[:countries]
-    return json $response_cache[:countries]
+  if $response_cache[:countries][:data] && Time.now < $response_cache[:countries][:expires_at]
+    return json $response_cache[:countries][:data]
   end
 
   token = get_access_token
@@ -68,17 +79,18 @@ get '/countries' do
   end
 
   if response.status == 200
-    $response_cache[:countries] = response.body
+    $response_cache[:countries][:data] = response.body
+    $response_cache[:countries][:expires_at] = Time.now + CACHE_EXPIRY
     json response.body
   else
     halt response.status, json({ error: 'Unable to fetch countries' })
   end
 end
 
-# Endpoint to fetch topics
+# Endpoint to fetch topics with cache expiry
 get '/topics' do
-  if $response_cache[:topics]
-    return json $response_cache[:topics]
+  if $response_cache[:topics][:data] && Time.now < $response_cache[:topics][:expires_at]
+    return json $response_cache[:topics][:data]
   end
 
   token = get_access_token
@@ -88,21 +100,22 @@ get '/topics' do
   end
 
   if response.status == 200
-    $response_cache[:topics] = response.body
+    $response_cache[:topics][:data] = response.body
+    $response_cache[:topics][:expires_at] = Time.now + CACHE_EXPIRY
     json response.body
   else
     halt response.status, json({ error: 'Unable to fetch topics' })
   end
 end
 
-# Endpoint to fetch helplines by country code and limit
+# Endpoint to fetch helplines by country code and limit with cache expiry
 get '/helplines' do
   country_code = params['country_code'] || 'us'
   limit = params['limit'] || 20
-
   cache_key = "#{country_code}_#{limit}"
-  if $response_cache[:helplines][cache_key]
-    return json $response_cache[:helplines][cache_key]
+
+  if $response_cache[:helplines][cache_key] && Time.now < $response_cache[:helplines][cache_key][:expires_at]
+    return json $response_cache[:helplines][cache_key][:data]
   end
 
   token = get_access_token
@@ -116,22 +129,25 @@ get '/helplines' do
     serialized_helplines = helplines.map do |helpline|
       HelplineSerializer.new(helpline).serialize_index
     end
-    $response_cache[:helplines][cache_key] = serialized_helplines
+    $response_cache[:helplines][cache_key] = {
+      data: serialized_helplines,
+      expires_at: Time.now + CACHE_EXPIRY
+    }
     json serialized_helplines
   else
     halt response.status, json({ error: 'Unable to fetch helplines' })
   end
 end
 
-# Endpoint to fetch helpline details by ID
+# Endpoint to fetch helpline details by ID with cache expiry
 get '/helplines/:id' do
-  token = get_access_token
   helpline_id = params[:id]
 
-  if $response_cache[:helplines][helpline_id]
-    return json $response_cache[:helplines][helpline_id]
+  if $response_cache[:helpline_details][helpline_id] && Time.now < $response_cache[:helpline_details][helpline_id][:expires_at]
+    return json $response_cache[:helpline_details][helpline_id][:data]
   end
 
+  token = get_access_token
   response = Faraday.get("https://api.throughlinecare.com/v1/helplines/#{helpline_id}") do |req|
     req.headers['Authorization'] = "Bearer #{token}"
     req.headers['Accept'] = 'application/json'
@@ -140,7 +156,10 @@ get '/helplines/:id' do
   if response.status == 200
     helpline = JSON.parse(response.body)['helpline']
     serialized_helpline = HelplineSerializer.new(helpline).serialize_show
-    $response_cache[:helplines][helpline_id] = serialized_helpline
+    $response_cache[:helpline_details][helpline_id] = {
+      data: serialized_helpline,
+      expires_at: Time.now + CACHE_EXPIRY
+    }
     json serialized_helpline
   else
     halt response.status, json({ error: 'Unable to fetch helpline details' })
