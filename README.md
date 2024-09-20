@@ -56,5 +56,100 @@ repository](https://github.com/PurpleBooth/a-good-readme-template/tags).
 ## License
 This project is licensed under the [CC0 1.0 Universal](LICENSE.md)
 Creative Commons License - see the [LICENSE.md](LICENSE.md) file for details
+##
+## API Endpoints Documentation
 
-## Acknowledgments
+### Base URL
+- Local: `http://localhost:4567`
+- Deployed: [Heroku Site](https://guardian-angel-5f5f5ba49dc1.herokuapp.com)
+
+### Endpoints
+
+#### 1. **GET /countries**
+   - **Description:** Fetches a list of countries with their emergency numbers.
+   - **Response:**
+     ```json
+     {
+       "countries": [
+         {
+           "name": "New Zealand",
+           "code": "NZ",
+           "emergencyNumber": "111"
+         },
+         {
+           "name": "United States",
+           "code": "US",
+           "emergencyNumber": "988"
+         }
+       ]
+     }
+     ```
+
+#### 2. **GET /topics**
+   - **Description:** Fetches a list of topics related to emergency services.
+   - **Response:**
+     ```json
+     {
+       "topics": [
+         {
+           "name": "Abuse & domestic violence",
+           "code": "abuse-domestic-violence"
+         },
+         {
+           "name": "Gender & sexual identity",
+           "code": "gender-sexual-identity"
+         }
+       ]
+     }
+     ```
+
+#### 3. **GET /helplines**
+   - **Description:** Fetches a list of helplines based on the country code and limit.
+   - **Parameters:**
+     - `country_code` (optional, default: "us")
+     - `limit` (optional, default: 20)
+   - **Response:**
+     ```json
+     [
+       {
+         "id": "c8e47108-3f87-4311-ab8f-7a3adf01ba06",
+         "name": "988 Suicide & Crisis Lifeline",
+         "description": "A suicide prevention and crisis intervention service.",
+         "website": "https://988lifeline.org"
+       }
+     ]
+     ```
+
+#### 4. **GET /helplines/:id**
+   - **Description:** Fetches details of a specific helpline by its ID.
+   - **Parameters:**
+     - `id`: Helpline ID
+   - **Response:**
+     ```json
+     {
+       "id": "c8e47108-3f87-4311-ab8f-7a3adf01ba06",
+       "name": "988 Suicide & Crisis Lifeline",
+       "description": "A suicide prevention and crisis intervention service.",
+       "website": "https://988lifeline.org",
+       "phoneNumber": "988",
+       "smsNumber": "988",
+       "webChatUrl": "https://988lifeline.org/chat/",
+       "topics": ["Suicidal thoughts", "Abuse & domestic violence"],
+       "country": {
+         "name": "United States",
+         "code": "US",
+         "emergencyNumber": "988"
+       },
+       "timezone": "America/Puerto_Rico"
+     }
+     ```
+
+### Error Handling
+- The API will return a JSON object with an error message and appropriate status code if something goes wrong.
+
+```json
+{
+  "error": "Unable to fetch helplines"
+}
+
+
