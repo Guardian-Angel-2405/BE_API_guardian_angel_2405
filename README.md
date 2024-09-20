@@ -2,25 +2,25 @@
 ![guardian_angel_logo](https://github.com/user-attachments/assets/836291c1-b7b2-4c23-8559-51d4c90521d4)
 ‘Guardian Angel’ is a full stack Rails application that will allow users to create an account and gain access to resources that can boost mental health and/or help in times of crisis. Users will be able to select from a list of emotions and feelings as many times per day as they wish. By accessing the ‘ThroughLine API’, a list of helpful resources will be returned to the user, including, but not limited to, phone numbers, sms hotlines, support groups, and relevant, helpful websites. 
 
-The BE Journal Repository is responsible for serving as the data base of a `users` `journal` information. It packages JSON responses for the front end application with a users particular journal entries along with an affirmation which is unique. This affirmation comes from another API being consumed within the Guardian Angel Backend Journal Repository. 
+The BE Sinatra API Repository is responsible for serving json responses from the Throughline API to the front end repository. It packages JSON responses for the front end application with infomration about emergency services from the Throughline API. 
 ## Getting Started
 These instructions will give you a copy of the project up and running on
 your local machine for development and testing purposes. See deployment
 for notes on deploying the project on a live system.
 ### Prerequisites
-You will need to have the Ruby 3.2.2 and Rails 7.1.4. This project works in conjuction with the two other repositoris within the Guardian Angel application, but they are not necessary to run this application. 
+You will need to have the Ruby 3.2.2. This project works in conjuction with the two other repositoris within the Guardian Angel application, but they are not necessary to run this application. 
 ### Installing
-To install and use this repository on your local machine first clone down this repository, then clone down the [Guardian Angel Journal BE Repository](https://github.com/Guardian-Angel-2405/BE_JOURNAL_guardian_angel_2405) repository.
-Navigate through the console so that your are in the directories of each application (you will need a terminals open for each of the three repositories).
-Run `rails db:{create,migrate}` to establish the database. Then run `bundle install` to install all the gem dependencies. 
-Following this run `rails s` in the terminal. For example `localhost:3000` for the Journal BE repository. These values are already set by default in each repository but you can change it by going to the `puma.rb` files in the `config` directory for the Rails applications. Your application should now be running. 
+To install and use this repository on your local machine first clone down this repository.
+Navigate through the console so that your are in the directory for the repository.
+Then run `bundle install` to install all the gem dependencies. 
+Following this run `ruby app.rb` in the terminal. This will start the server locally. For example `localhost:3000` for the Journal BE repository.
 
 Alternatively you can utilize the deployed version of the site here: [Heroku Site]( ).
 
 ## Making API Calls and Endpoints 
 
 ## Running the tests
-To run the tests for this repository, simply run `bundle exec rspec spec` from the command line while in the Guardian Angel projects directory. This will run all test files for the application. 
+To run the tests for this repository, simply run ` ` from the command line while in the Guardian Angel projects directory. This will run all test files for the application. 
 ## Deployment
 Instead of locally running all of the repositories, you can utilize the deployed [Heroku Site](https://guardian-angel-5f5f5ba49dc1.herokuapp.com/login). Making API calls the site will user the following as the base url: ``. If running locally, use the `localhost:port_number` as the base url for making API calls. 
 ## Built With
